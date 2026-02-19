@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Son Official - Game & Hosting</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <button class="theme-toggle" id="themeToggle"><i class="fas fa-sun"></i></button>
+        <button class="menu-btn" id="menuToggle"><i class="fas fa-bars"></i></button>
+    </header>
+
+    <nav class="sidebar" id="sidebar">
+        <h3><i class="fas fa-compass"></i> Menu</h3>
+        <ul class="menu-items">
+            <li><button id="homeBtn" class="active"><i class="fas fa-home"></i> Beranda</button></li>
+            <li><button id="productsBtn"><i class="fas fa-shopping-bag"></i> Produk</button></li>
+            <li><button id="testimonialsBtn"><i class="fas fa-images"></i> Testimoni</button></li>
+            <li><button id="feedbackBtn"><i class="fas fa-comment-dots"></i> Bantuan</button></li>
+            <li><button id="adminBtn"><i class="fas fa-user-cog"></i> Admin</button></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- HOME PAGE -->
+        <section id="homePage" class="page active">
+            <div class="hero-home">
+                <img class="logo-large" src="https://files.catbox.moe/n316kg.jpg" alt="Son Official" loading="lazy" onerror="this.src='https://via.placeholder.com/150'">
+                <h1><span>#</span> Son Official</h1>
+                <div class="badge">P.R.O</div>
+                <p class="description">Game & Hosting terbaik dan terpercaya.</p>
+            </div>
+
+            <div class="view-all-btn-container">
+                <button class="btn btn-gradient" id="viewAllProductsBtn" style="min-width: 220px;">
+                    <i class="fas fa-shopping-bag"></i> Lihat Semua Produk
+                </button>
+            </div>
+
+            <div class="separator">
+                <span class="line"></span>
+                <i class="fas fa-star"></i>
+                <span class="line"></span>
+            </div>
+
+            <div style="margin-bottom: 40px;">
+                <h2 style="text-align: center; margin-bottom: 30px;">Kenapa Pilih Son?</h2>
+                <div class="alasan-grid">
+                    <div class="alasan-card">
+                        <div class="alasan-icon"><i class="fas fa-headset"></i></div>
+                        <h3>Admin Ramah & Fast Respon</h3>
+                        <p>Pelayanan cepat, ramah, siap bantu 24/7</p>
+                    </div>
+                    <div class="alasan-card">
+                        <div class="alasan-icon"><i class="fas fa-tag"></i></div>
+                        <h3>Harga Pas di Kantong</h3>
+                        <p>Harga bersahabat untuk semua kalangan</p>
+                    </div>
+                    <div class="alasan-card">
+                        <div class="alasan-icon"><i class="fas fa-crown"></i></div>
+                        <h3>Produk Berkelas</h3>
+                        <p>Produk terbaik dengan fitur lengkap</p>
+                    </div>
+                    <div class="alasan-card">
+                        <div class="alasan-icon"><i class="fas fa-credit-card"></i></div>
+                        <h3>Semua Pembayaran</h3>
+                        <p>DANA, GOPAY, QRIS, dan lainnya</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUCTS PAGE -->
+        <section id="productsPage" class="page">
+            <div class="products-header">
+                <h2>Koleksi Produk</h2>
+                <div class="products-count"><span id="productCount">0</span> produk</div>
+            </div>
+            <div class="carousel-container">
+                <button class="carousel-btn prev"><i class="fas fa-chevron-left"></i></button>
+                <div class="products-carousel" id="productsContainer"></div>
+                <button class="carousel-btn next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS PAGE -->
+        <section id="testimonialsPage" class="page">
+            <div class="testimonials-header">
+                <h2>Testimoni</h2>
+                <div class="testimonials-count"><span id="testimoniCount">0</span> testimoni</div>
+            </div>
+            <div class="testimonials-carousel-container">
+                <button class="carousel-btn testimonial-prev"><i class="fas fa-chevron-left"></i></button>
+                <div class="testimonials-carousel" id="testimonialsContainer"></div>
+                <button class="carousel-btn testimonial-next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <!-- FEEDBACK PAGE -->
+        <section id="feedbackPage" class="page">
+            <div style="max-width:600px; margin:0 auto;">
+                <h2 style="text-align:center;">Butuh Bantuan?</h2>
+                <p style="text-align:center; margin-bottom:30px;">Tim siap membantu.</p>
+                <div class="feedback-form">
+                    <div class="form-group"><label>Nama</label><input type="text" id="name" placeholder="Nama lengkap"></div>
+                    <div class="form-group"><label>Pesan</label><textarea id="message" rows="4" placeholder="Tulis pesan..."></textarea></div>
+                    <button class="btn btn-gradient" id="sendToWhatsAppBtn" style="width:100%;"><i class="fab fa-whatsapp"></i> Kirim via WhatsApp</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOGIN PAGE -->
+        <section id="loginPage" class="page">
+            <div style="max-width:400px; margin:0 auto; background:var(--surface); padding:40px; border-radius:20px; box-shadow:var(--shadow);">
+                <div style="width:70px;height:70px;border-radius:50%;margin:0 auto 20px;overflow:hidden;">
+                    <img src="https://files.catbox.moe/n316kg.jpg" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+                </div>
+                <h2 style="text-align:center; margin-bottom:25px;">Masuk Admin</h2>
+                <div class="form-group"><input type="text" id="adminUsername" placeholder="Username"></div>
+                <div class="form-group"><input type="password" id="adminPassword" placeholder="Password"></div>
+                <button class="btn btn-gradient" id="loginBtn" style="width:100%;">Masuk</button>
+            </div>
+        </section>
+
+        <!-- ADMIN PAGE -->
+        <section id="adminPage" class="page">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+                <h2>Panel Admin</h2>
+                <button class="btn-secondary" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+            </div>
+
+            <!-- Form tambah produk -->
+            <div class="admin-form">
+                <h3><i class="fas fa-plus"></i> Tambah Produk Baru</h3>
+                <div class="form-group">
+                    <label>Nama</label>
+                    <input type="text" id="productName" placeholder="Contoh: Hosting Premium">
+                </div>
+                <div class="form-group">
+                    <label>Harga (Rp)</label>
+                    <input type="number" id="productPrice" placeholder="150000">
+                </div>
+                <div class="form-group">
+                    <label>Deskripsi</label>
+                    <textarea id="productDescription" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Gambar</label>
+                    <div class="upload-group">
+                        <input type="file" id="productFileInput" accept="image/*">
+                        <label for="productFileInput" class="upload-btn"><i class="fas fa-upload"></i> Pilih Gambar</label>
+                        <button class="btn btn-secondary" id="productUploadSubmit" style="display:none;">Upload</button>
+                    </div>
+                    <div id="productUploadStatus" class="upload-status"></div>
+                    <input type="url" id="productImageUrl" placeholder="URL gambar">
+                    <div id="productImagePreview" style="margin-top:10px; display:none;">
+                        <img id="productImagePreviewImg" style="max-width:100%; max-height:150px; border-radius:10px;">
+                    </div>
+                </div>
+                <button class="btn btn-gradient" id="addProductBtn"><i class="fas fa-plus"></i> Tambah Produk</button>
+            </div>
+
+            <h3><i class="fas fa-box"></i> Kelola Produk</h3>
+            <div class="admin-scroll" id="adminProductsList"></div>
+
+            <h3 style="margin-top:40px;"><i class="fas fa-star"></i> Kelola Rekomendasi</h3>
+            <div class="admin-scroll" id="adminRekomendasiList"></div>
+
+            <!-- Form tambah testimoni -->
+            <div class="admin-form" style="margin-top:40px;">
+                <h3><i class="fas fa-images"></i> Tambah Testimoni</h3>
+                <div class="form-group">
+                    <label>Gambar</label>
+                    <div class="upload-group">
+                        <input type="file" id="testimonialFileInput" accept="image/*">
+                        <label for="testimonialFileInput" class="upload-btn"><i class="fas fa-upload"></i> Pilih Gambar</label>
+                        <button class="btn btn-secondary" id="testimonialUploadSubmit" style="display:none;">Upload</button>
+                    </div>
+                    <div id="testimonialUploadStatus" class="upload-status"></div>
+                    <input type="url" id="testimonialImageUrl" placeholder="URL gambar">
+                    <div id="testimonialImagePreview" style="margin-top:10px; display:none;">
+                        <img id="testimonialImagePreviewImg" style="max-width:100%; max-height:150px; border-radius:10px;">
+                    </div>
+                </div>
+                <button class="btn btn-gradient" id="addTestimonialBtn"><i class="fas fa-plus"></i> Tambah Testimoni</button>
+            </div>
+
+            <h3>Daftar Testimoni</h3>
+            <div class="admin-scroll" id="adminTestimonialsList"></div>
+        </section>
+    </main>
+
+    <!-- MODAL DETAIL PRODUK -->
+    <div class="modal" id="productDetailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detail Produk</h3>
+                <button class="close-btn" id="closeDetailModalBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="productDetailBody"></div>
+        </div>
+    </div>
+
+    <!-- MODAL PEMBELIAN -->
+    <div class="modal" id="purchaseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-shopping-cart"></i> Pilih Metode</h3>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="purchaseModalBody"></div>
+        </div>
+    </div>
+
+    <!-- MODAL DETAIL PEMBAYARAN -->
+    <div class="modal" id="paymentDetailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-credit-card"></i> Detail</h3>
+                <button class="close-btn" id="closePaymentModalBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="paymentDetailBody"></div>
+        </div>
+    </div>
+
+    <!-- MODAL EDIT PRODUK -->
+    <div class="modal" id="editProductModal">
+        <div class="modal-content">
+            <div class="modal-header"><h3>Edit Produk</h3><button class="close-btn" id="closeEditModalBtn">&times;</button></div>
+            <div class="modal-body">
+                <div class="form-group"><label>Nama</label><input type="text" id="editProductName"></div>
+                <div class="form-group"><label>Harga</label><input type="number" id="editProductPrice"></div>
+                <div class="form-group"><label>Deskripsi</label><textarea id="editProductDescription" rows="3"></textarea></div>
+                <div class="form-group"><label>URL Gambar Baru</label><input type="url" id="editProductImageUrl" placeholder="Kosongkan jika tidak diganti"></div>
+                <div><img id="currentProductImage" style="width:100px; height:100px; object-fit:cover; border-radius:10px;"></div>
+                <div class="form-group"><label>Stok</label>
+                    <div style="display:flex; gap:20px;">
+                        <label><input type="radio" name="editSoldOut" value="false" checked> Tersedia</label>
+                        <label><input type="radio" name="editSoldOut" value="true"> Habis</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelEditBtn">Batal</button>
+                <button class="btn btn-gradient" id="saveEditBtn">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL GAMBAR FULL -->
+    <div class="modal" id="fullImageModal" onclick="this.classList.remove('active')">
+        <div class="modal-content" style="background:transparent; box-shadow:none; max-width:90vw;" onclick="event.stopPropagation()">
+            <img id="fullSizeImage" style="max-width:100%; max-height:90vh; border-radius:10px;">
+        </div>
+    </div>
+
+    <div class="notification" id="notification"><i class="fas fa-check-circle"></i> <span id="notificationMessage"></span></div>
+
+    <footer>
+        <div class="footer-logo">Son Official</div>
+        <p>Game & Hosting</p>
+        <div class="social-media">
+            <a href="https://www.instagram.com/sonnnn03" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/6283159696918" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://t.me/SonKairn" target="_blank" class="social-icon"><i class="fab fa-telegram"></i></a>
+        </div>
+        <div class="copyright">&copy; 2026 Son Official</div>
+    </footer>
+
+    <!-- JavaScript files -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/testimonials.js"></script>
+    <script src="js/payment.js"></script>
+    <script src="js/upload.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
